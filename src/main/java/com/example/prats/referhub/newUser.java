@@ -1,4 +1,4 @@
-package com.example.prats.referhub;
+package com.example.kaushik.referhub;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,17 +27,16 @@ public class newUser extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_user);
+        setContentView(R.layout.activity_new_user);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        email = (EditText) findViewById(R.id.Email);
+        email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         //loginButton = (Button) findViewById(R.id.login);
         //forgotButton = (Button) findViewById(R.id.forgotpassword);
         //signInButton = (SignInButton) findViewById(R.id.g_signin);
-        newPassButton = (Button) findViewById(R.id.register);
-
+        registerButton =(Button) findViewById(R.id.register) ;
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

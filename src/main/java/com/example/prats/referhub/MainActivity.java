@@ -1,4 +1,4 @@
-package com.example.prats.referhub;
+package com.example.kaushik.referhub;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
