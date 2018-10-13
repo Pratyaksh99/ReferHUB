@@ -7,6 +7,8 @@ import android.os.Handler;
 
 public class SplashScreen extends AppCompatActivity {
 
+    private final int SPLASH_DISPLAY_TIME = 3000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -24,7 +26,7 @@ public class SplashScreen extends AppCompatActivity {
                 SplashScreen.this.startActivity(mainIntent);
                 SplashScreen.this.finish();
             }
-        }, SPLASH_DISPLAY_LENGTH);
+        }, SPLASH_DISPLAY_TIME);
     }
 
 }
