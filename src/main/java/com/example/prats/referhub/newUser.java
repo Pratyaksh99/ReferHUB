@@ -15,6 +15,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class newUser extends AppCompatActivity {
@@ -23,6 +28,9 @@ public class newUser extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     EditText email;
     EditText password;
+    DatabaseReference my_database;
+
+    //Map<String,User> users = new HashMap<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,6 +38,7 @@ public class newUser extends AppCompatActivity {
         setContentView(R.layout.activity_new_user);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        my_database = FirebaseDatabase.getInstance().getReference();
 
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
@@ -40,8 +49,8 @@ public class newUser extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email1 = email.getText().toString();
-                String password1 = password.getText().toString();
+                final String email1 = email.getText().toString();
+                final String password1 = password.getText().toString();
 
                 if (TextUtils.isEmpty(email1)) {
                     Toast.makeText(getApplicationContext(), "Please fill in the required fields", Toast.LENGTH_SHORT).show();
@@ -55,8 +64,13 @@ public class newUser extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
                 }
 
+                User new_User = new User(email1, password1);
+
+                my_database.child("Users").push().setValue(new_User);
+
                 firebaseAuth.createUserWithEmailAndPassword(email1, password1)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
