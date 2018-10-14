@@ -18,9 +18,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
-import java.util.Map;
-
 
 public class newUser extends AppCompatActivity {
     //EditText loginEmail,loginPassword;
@@ -35,7 +32,7 @@ public class newUser extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_user);
+        setContentView(R.layout.activity_main_);
 
         firebaseAuth = FirebaseAuth.getInstance();
         my_database = FirebaseDatabase.getInstance().getReference();
@@ -74,6 +71,8 @@ public class newUser extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
+//                                    my_database.child("Users").child().setValue(new_User);
+
                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                     finish();
                                 } else {

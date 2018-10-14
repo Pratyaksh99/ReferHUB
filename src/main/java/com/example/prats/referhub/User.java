@@ -1,14 +1,10 @@
 package com.example.kaushik.referhub;
 
-/**
- * Created by Kaushik on 13-Oct-18.
- */
-
 public class User {
 
     String email;
     String password;
-    String coupon;
+    Coupon coupon;
 
     public User(String email, String password) {
         this.email = email;
@@ -32,11 +28,11 @@ public class User {
         this.password = password;
     }
 
-    public String getCoupon() {
+    public Coupon getCoupon() {
         return coupon;
     }
 
-    public void setCoupon(String coupon) {
+    public void setCoupon(Coupon coupon) {
         this.coupon = coupon;
     }
 
