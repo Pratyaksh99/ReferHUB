@@ -3,37 +3,19 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="#000000">
-
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
-
-        <EditText
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="E-mail"
-            android:inputType="textEmailAddress" />
-
-    </android.support.design.widget.TextInputLayout>
-
-
+    android:background="#0b84ad">
 
     <android.support.design.widget.TextInputLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
 
-        <EditText
-            android:id="@+id/password"
+        <TextView
+            android:id="@+id/incorrectLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:ems="10"
-            android:hint="Password"
-            android:inputType="textPassword" />
+            android:gravity="center"
+            android:textSize="30dp"
+            android:text="INCORRECT LOGIN INFORMATION" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -44,15 +26,14 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/register"
+            android:id="@+id/tryAgain"
             android:layout_width="140dp"
             android:layout_height="45dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:background="@color/colorAccent"
-            android:text="Register!"
+            android:background="#000000"
+            android:text="TRY AGAIN"
             android:textColor="#FFFF" />
     </LinearLayout>
-
 
 </LinearLayout>

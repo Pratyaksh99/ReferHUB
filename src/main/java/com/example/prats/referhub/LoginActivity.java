@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,13 +33,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private static final int RC_SIGN_IN = 9001;
-    int flag = 0;
+    static int flag = 0;
+    ArrayList<User> users = new ArrayList<>();
 
     EditText email,password;
     Button registerButton,loginButton;
@@ -54,8 +57,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         email = (EditText) findViewById(R.id.Email);
         password = (EditText) findViewById(R.id.Password);
-        final String email1 = email.getText().toString();
-        final String password1 = password.getText().toString();
         registerButton = (Button) findViewById(R.id.newuser);
         loginButton = (Button) findViewById(R.id.login);
         signInButton = (SignInButton) findViewById(R.id.g_signin);
@@ -88,16 +89,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onClick(View v) {
 
-                if(check(email1,password1)) {
-
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-
-                }
-                else{
-
-
-
-                }
+                String email1 = email.getText().toString();
+                String password1 = password.getText().toString();
+                check(email1,password1);
 
             }
         });
@@ -108,48 +102,68 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 startActivity(new Intent(getApplicationContext(), newUser.class));
             }
         });
-
-        if (firebaseAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        }
     }
 
-        public boolean check(final String email1, final String password1){
-
-            my_database.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                    DataSnapshot d = dataSnapshot.child("Users");
-
-                    for(DataSnapshot snapshot: d.getChildren()) {
-
-                        User u = snapshot.getValue(User.class);
-
-                        if(u.equals(new User(email1,password1))){
-
-                            flag = 1;
-                            System.out.println("YO BRO!!!");
-
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-            if(flag == 1){
-
-                return true;
-
-            }
-
-            return false;
+    public void redirectLogin(Boolean result){
+        if(result) {
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
         }
+        else{
+            System.out.println("Hello");
+            startActivity(new Intent(LoginActivity.this, IncorrectLogin.class));
+
+        }
+
+    }
+    public void check(final String email1, final String password1){
+
+        my_database.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                DataSnapshot d = dataSnapshot.child("Users");
+
+                for(DataSnapshot snapshot: d.getChildren()) {
+
+                    User u = snapshot.getValue(User.class);
+
+                    if(u.getEmail().equals(email1) && u.getPassword().equals(password1)){
+
+                        flag = 1;
+                        redirectLogin(true);
+                        return;
+
+                    }
+                    users.add(u);
+
+                }
+              //if no users,
+                redirectLogin(false);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+//        while(users.size()==0){
+//        }
+//        Log.d("EmailEnter",email1);
+//        Log.d("PasswordEnter", password1);
+//        for(int i = 0; i < users.size(); i++){
+//            Log.d("Email",users.get(i).getEmail());
+//            Log.d("Password", users.get(i).getPassword());
+//            if(users.get(i).getEmail().equals(email1) && users.get(i).getPassword().equals(password1)){
+//              return true;
+//            }
+//        }
+////        if(flag==1)
+////            return true;
+////        }
+//        return false;
+
+    }
 
 
     private void signIn() {
